@@ -4,11 +4,11 @@ decrypt_stegnography <- function(intensities){
   k<-0
   ascii <- 0
   done <- FALSE
-  for(i in nrow(intensities)){
+  for(i in 1:nrow(intensities)){
     if(done==TRUE){
       break
     }
-    for(j in ncol(intensities)){
+    for(j in 1:ncol(intensities)){
       if(bitwAnd(intensities[i,j],1)==1){
         ascii <- ascii + 2**k
       }
