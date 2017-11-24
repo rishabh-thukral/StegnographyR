@@ -33,22 +33,25 @@ image(intensityMatrix ,col = gray(0:255 / 256))
 zeros = vector(mode = "numeric",length = ncol(intensityMatrix))
 b1 <- zeros+1
 bit1 <- NULL#LSB original
-for( i in (1:nrow(x))){
-  vec <- bitwAnd(x[i,],b1)#lsb
+for( i in (1:nrow(intensityMatrix))){
+  vec <- bitwAnd(intensityMatrix[i,],b1)#lsb
   bit1 <- rbind(bit1,vec)
 }
 originalLSB <- bit1
 
 #Get Message Input
 maxLen <- (height*width)/8
+maxLen <- maxLen - 40
 plainText <- dlgInput(message = paste0("Enter Message to encypt. Max character limit = ",maxLen), default = "My Message", gui = .GUI)$res
-
+if(nchar(plainText) > maxLen){
+  plainText <- substr(plainText,1,maxLen)
+}
 #Encrypt using Stegnography
 intensityMatrix <- encrypt_stegnography(intensities = intensityMatrix,PT = plainText)
 
 #Extract new LSB
 bit1 <- NULL#LSB new
-for( i in (1:nrow(x))){
+for( i in (1:nrow(intensityMatrix))){
   vec <- bitwAnd(intensityMatrix[i,],b1)#lsb
   bit1 <- rbind(bit1,vec)
 }
@@ -56,9 +59,14 @@ newLSB <- bit1
 
 #compute loss of information
 error <- newLSB - originalLSB
-changePixels <- numeric(nnzero(error))
+changePixels <- sum(colSums(error!=0))
 totalPixels <- nrow(error)*ncol(error)
-MAPE <- (changePixels*100)/(totalPixels*8)
+MAPE <- (changePixels*100)/(totalPixels)
 winDialog(type = "ok",message = paste0("Encyption Successful with ",MAPE,"% Information Loss."))
 
+#write file
+writePNG(intensityMatrix/255,target = tmpName)
+cipherImage <- image_read(path = tmpName)
+saveDirectory <- dlgSave(title = "Save Image to")$res
+image_write(cipherImage,path = saveDirectory,format = "png")
 
