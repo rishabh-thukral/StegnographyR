@@ -3,6 +3,7 @@ library("png")
 library("colorspace")
 library("magick")
 library("svDialogs")
+source("EncryptStegnography.R")
 
 #Get file location
 winDialog("ok","Choose Image File to encrypt")
@@ -41,4 +42,5 @@ for( i in (1:nrow(x))){
 maxLen <- (height*width)/8
 plainText <- dlgInput(message = paste0("Enter Message to encypt. Max character limit = ",maxLen), default = "My Message", gui = .GUI)$res
 
-#convert string to bitstream
+#Encrypt using Stegnography
+
