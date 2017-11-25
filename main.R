@@ -3,8 +3,13 @@ library("png")
 library("colorspace")
 library("magick")
 library("svDialogs")
+<<<<<<< HEAD
 source(paste0(getwd(),"/EncryptStegnography.R"))
 source(paste0(getwd(),"/DecryptStegnography.R"))
+=======
+source("C:/Users/RISHABH/Documents/StegnographyR/EncryptStegnography.R")
+source("C:/Users/RISHABH/Documents/StegnographyR/DecryptStegnography.R")
+>>>>>>> 0fb673dae47270875066c62f699dc6d75aae0393
 
 #Get file location
 winDialog("ok","Choose Image File to encrypt")
