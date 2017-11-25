@@ -3,8 +3,8 @@ library("png")
 library("colorspace")
 library("magick")
 library("svDialogs")
-source("EncryptStegnography.R")
-source("DecryptStegnography.R")
+source("C:/Users/RISHABH/Documents/StegnographyR/EncryptStegnography.R")
+source("C:/Users/RISHABH/Documents/StegnographyR/DecryptStegnography.R")
 
 #Get file location
 winDialog("ok","Choose Image File to encrypt")
